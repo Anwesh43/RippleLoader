@@ -12,14 +12,21 @@ import android.view.ViewGroup;
 public class RippleLoader{
     private AppCompatActivity appCompatActivity;
     private RippleLoaderView rippleLoaderView;
+    private boolean isLoading = false;
     public RippleLoader(AppCompatActivity appCompatActivity) {
         this.appCompatActivity = appCompatActivity;
     }
     public void startLoading() {
-        rippleLoaderView = new RippleLoaderView(appCompatActivity.getApplicationContext());
-        this.appCompatActivity.addContentView(rippleLoaderView,new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        if(!isLoading) {
+            rippleLoaderView = new RippleLoaderView(appCompatActivity.getApplicationContext());
+            this.appCompatActivity.addContentView(rippleLoaderView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            isLoading = true;
+        }
     }
     public void stop() {
-        rippleLoaderView.setVisibility(View.INVISIBLE);
+        if(isLoading) {
+            rippleLoaderView.setVisibility(View.INVISIBLE);
+            isLoading = false;
+        }
     }
 }
